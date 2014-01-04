@@ -1,5 +1,7 @@
 $(document).ready(function(){
   
+ var ready = 0;
+
  window.fbAsyncInit = function() {
   FB.init({
     appId      : 235511756631747,
@@ -8,16 +10,38 @@ $(document).ready(function(){
     xfbml      : true  // parse XFBML
   });
 
-  FB.Event.subscribe('auth.authResponseChange', function(response) {
+/*  FB.getLoginStatus(function(response) {
      if (response.status === 'connected') {
-      testAPI();
+	 $("#fb-login").remove();
+
+	 loadPersonalInfo();
+
     } else if (response.status === 'not_authorized') {
-       FB.login();
+	 $("#personal").append('<button id="fb-login" type="button" class="btn btn-danger personal-box">Log in with Facebook</button>');
+	$("#fb-login").click(function(){FB.login()});
+
     } else {
-      FB.login();
-    }
-  });
+
+	$("#personal").append('<button id="fb-login" type="button" class="btn btn-danger personal-box">Log in with Facebook</button>');
+	$("#fb-login").click(function(){FB.login()});
+	
+    }*/
+
+      FB.Event.subscribe('auth.authResponseChange', function(response) {
+	  if (response.status === 'connected') {
+	      window.location.replace("http://digitaltable.parseapp.com/home.html");
+	     // loadPersonalInfo();
+	  } else if (response.status === 'not_authorized') {
+	      FB.login();
+	  } else {
+	      FB.login();
+	  }
+      });
   };
+
+    $("#personal").append('<button id="fb-login" type="button" class="btn btn-danger personal-box">Log in with Facebook</button>');
+    $("#fb-login").click(function(){FB.login()});
+	
 
   // Load the SDK asynchronously
   (function(d){
@@ -36,9 +60,18 @@ $(document).ready(function(){
       console.log('Good to see you, ' + response.name + '.');
     });
   }
-    $("#fb-login").click(function(){FB.login()});
 
+   function loadPersonalInfo() {
+       $("#personal").append("<div class='personal-box'></div>");
+       var box = $(".personal-box");
+       var name;
+       FB.api('/me', function(response) {
+	   name = response.name;
+	   box.html("Welcome, " + name + "!");
+       });
+   }
 
+  
 
 });
 
