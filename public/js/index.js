@@ -1,4 +1,5 @@
 $(document).ready(function(){
+var domain = "http://digitaltable.parseapp.com";
   
  window.fbAsyncInit = function() {
   FB.init({
@@ -8,27 +9,10 @@ $(document).ready(function(){
     xfbml      : true  // parse XFBML
   });
 
-/*  FB.getLoginStatus(function(response) {
-     if (response.status === 'connected') {
-	 $("#fb-login").remove();
-
-	 loadPersonalInfo();
-
-    } else if (response.status === 'not_authorized') {
-	 $("#personal").append('<button id="fb-login" type="button" class="btn btn-danger personal-box">Log in with Facebook</button>');
-	$("#fb-login").click(function(){FB.login()});
-
-    } else {
-
-	$("#personal").append('<button id="fb-login" type="button" class="btn btn-danger personal-box">Log in with Facebook</button>');
-	$("#fb-login").click(function(){FB.login()});
-	
-    }*/
-
       FB.Event.subscribe('auth.authResponseChange', function(response) {
 	  if (response.status === 'connected') {
-	      window.location.replace("http://digitaltable.parseapp.com/home.html");
-	     // loadPersonalInfo();
+	      $("#fb-login").remove();
+	      window.location.replace(domain + "/home.html");
 	  } else if (response.status === 'not_authorized') {
 	      FB.login();
 	  } else {
@@ -50,45 +34,12 @@ $(document).ready(function(){
    js.src = "//connect.facebook.net/en_US/all.js";
    ref.parentNode.insertBefore(js, ref);
   }(document));
-
-  // Here we run a very simple test of the Graph API after login is successful. 
-  // This testAPI() function is only called in those cases. 
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Good to see you, ' + response.name + '.');
-    });
-  }
-
-   function loadPersonalInfo() {
-       $("#personal").append("<div class='personal-box'></div>");
-       var box = $(".personal-box");
-       var name;
-       FB.api('/me', function(response) {
-	   name = response.name;
-	   box.html("Welcome, " + name + "!");
-       });
-   }
     
-    $("h1").fitText(.7);
+
+    $("h1").fitText(.8);
     $("h2").fitText(1.6);
     $("#fb-login").fitText(1);
-    adjustBackground();
-
-
- 
-    $(window).resize(adjustBackground);
-
-    function adjustBackground() {
-	if($(window).width() < 730) {		
-		$(".personal-box").css('margin-bottom', "300px");		
-	}else{
-	    $(".personal-box").css('margin-top', "5%");
-	}
-
 
 	
-    }
-
 });
 
