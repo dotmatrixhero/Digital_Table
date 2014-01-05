@@ -1,5 +1,6 @@
 h1, h2 {
    font-family:lucida console;
+   overflow:hidden;
 }
 
 h1 {
@@ -13,12 +14,13 @@ h2 {
     font-size:40px;
     color: #111f1f;
     text-shadow:
-    1px 1px 0 #5f5f5f,
+    1px 1px 0 #5f5f5f
     
 }
 
 body {
-    background-color:#4f0000
+    background-color:#4f0000;
+    overflow:hidden;
 }
 
 .navbar-default {
@@ -39,14 +41,20 @@ body {
 }
 
 .personal-box {
+
+   width:40%;
+  min-width:200px;
+  height:40%;
   color:white;
   background-color:#901111;
-  padding: 100px 25px;
+  padding: 2% 2%;
   font-size: 40px;
   line-height: 1.33;
   border-radius: 50px;
   opacity:.7;
-  margin-bottom:75px;
+  margin:auto;
+  margin-top:4%;
+  margin-bottom:5%;
   display: inline-block;
   font-weight: normal;
   line-height: 1.428571429;
@@ -58,7 +66,9 @@ body {
 
 
 #main-container {
+    background-size:1294px 972px;
+    background-repeat:no-repeat;
     background-image:url("../img/table.jpg");
-    background-size:100%;
-}
+    background-position: left -150px top 0;
 
+}

@@ -1,7 +1,5 @@
 $(document).ready(function(){
   
- var ready = 0;
-
  window.fbAsyncInit = function() {
   FB.init({
     appId      : 235511756631747,
@@ -40,8 +38,9 @@ $(document).ready(function(){
   };
 
     $("#personal").append('<button id="fb-login" type="button" class="btn btn-danger personal-box">Log in with Facebook</button>');
+
     $("#fb-login").click(function(){FB.login()});
-	
+    
 
   // Load the SDK asynchronously
   (function(d){
@@ -70,8 +69,26 @@ $(document).ready(function(){
 	   box.html("Welcome, " + name + "!");
        });
    }
+    
+    $("h1").fitText(.7);
+    $("h2").fitText(1.6);
+    $("#fb-login").fitText(1);
+    adjustBackground();
 
-  
+
+ 
+    $(window).resize(adjustBackground);
+
+    function adjustBackground() {
+	if($(window).width() < 730) {		
+		$(".personal-box").css('margin-bottom', "300px");		
+	}else{
+	    $(".personal-box").css('margin-top', "5%");
+	}
+
+
+	
+    }
 
 });
 
