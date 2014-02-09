@@ -35,6 +35,15 @@ var ChatView = Backbone.View.extend({
         this.collection = new Chat();
         this.collection.bind('add', this.appendToList);
 
+        this.pusher  = new Pusher('3c7da757d0d8da6f399e', { encrypted : true });
+        this.channel = this.pusher.subscribe('my_channel');
+
+        var self = this;
+        this.channel.bind('my_event', function(data) {
+            var message = new Message({ text : data.message });
+            self.appendToList(message);
+        });
+
         this.render();
     },
 
