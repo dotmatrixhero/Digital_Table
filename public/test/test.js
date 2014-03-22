@@ -44,12 +44,29 @@ var ChatView = Backbone.View.extend({
         this.collection = new Chat();
         this.collection.bind('add', this.appendToList);
 
-        this.pusher  = new Pusher('3c7da757d0d8da6f399e', { encrypted : true });
-        this.channel = this.pusher.subscribe('my-channel');
+        this.pusher  = new Pusher('3c7da757d0d8da6f399e', { encrypted : true,
+                                                            authTransport : 'jsonp',
+                                                            authEndpoint: 'http://digitaltable.parseapp.com/pusher/auth'});
+        this.pusher.connection.bind('error', function(err) { 
+            console.log("Connection Error");
+        });
+        console.log(this.pusher.connection.state);
+
+        this.channel = this.pusher.subscribe('private-my-channel');
+        this.channel.bind('pusher:subscription_succeeded', function() {
+            console.log("Subscription Success!");
+        });
+        this.channel.bind('pusher:subscription_error', function(status) {
+            if(status == 408 || status == 503){
+                console.log("Subscription Error");
+            }
+        });
+        console.log(this.channel.pusher.connection.state);
 
         this.channel.bind('my-event', _.bind(this.pullMessage, this));
-
         this.render();
+
+        // Remember to unsubscribe
     },
 
     render : function () {
