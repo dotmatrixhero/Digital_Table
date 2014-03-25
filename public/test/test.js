@@ -46,6 +46,7 @@ var ChatView = Backbone.View.extend({
 
         this.pusher  = new Pusher('3c7da757d0d8da6f399e', { encrypted : true,
                                                             authTransport : 'jsonp',
+
                                                             authEndpoint: 'http://digitaltable.parseapp.com/pusher/auth'});
         this.pusher.connection.bind('error', function(err) { 
             console.log("Connection Error");
@@ -63,7 +64,7 @@ var ChatView = Backbone.View.extend({
         });
         console.log(this.channel.pusher.connection.state);
 
-        this.channel.bind('my-event', _.bind(this.pullMessage, this));
+        this.channel.bind('client-Message', _.bind(this.pullMessage, this));
         this.render();
 
         // Remember to unsubscribe
